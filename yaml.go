@@ -1,6 +1,7 @@
 package tsyaml
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/viper"
@@ -19,33 +20,36 @@ func init() {
 	viper.SetConfigType("yaml")
 }
 
-func ReadInConfig(cn string) {
-
+func ReadInConfig(cn string) error {
 	viper.SetConfigName(cn)
 	err := viper.ReadInConfig()
 	if err != nil {
 		tslog.E.Printf("config name %v: %v", cn, err)
 	}
+	return err
 }
 
-func GetStr(key string) string {
-	v := get(key).(string)
-	return v
+func GetStr(key string) (string, error) {
+	v, err := get(key)
+	return v.(string), err
 }
 
-func GetUInt(key string) uint {
-	v := get(key).(uint)
-	return v
+func GetUInt(key string) (uint, error) {
+	v, err := get(key)
+	return v.(uint), err
 }
 
-func get(key string) interface{} {
+func get(key string) (interface{}, error) {
+	var err error = nil
 	if key == "" {
-		tslog.E.Println("attribute name cannot be empty")
-		return nil
+		err = fmt.Errorf("attribute name cannot be empty")
+		tslog.E.Println(err)
+		return nil, err
 	}
 	v := viper.Get(key)
 	if v == nil {
-		tslog.E.Printf("did not find key %v", key)
+		err = fmt.Errorf("did not find key %v", key)
+		tslog.I.Println(err)
 	}
-	return v
+	return v, err
 }
