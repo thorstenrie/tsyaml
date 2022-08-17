@@ -8,15 +8,22 @@ import (
 	"github.com/thorstenrie/tslog"
 )
 
-func init() {
+const (
+	envn string = "TS_YAMLPATH"
+)
 
-	dirname, isset := os.LookupEnv("TS_YAMLDIR")
+func init() {
+	initialize()
+}
+
+func initialize() {
+	path, isset := os.LookupEnv(envn)
 
 	if !isset {
-		dirname = "."
+		path = "."
 	}
 
-	viper.AddConfigPath(dirname)
+	viper.AddConfigPath(path)
 	viper.SetConfigType("yaml")
 }
 
@@ -32,6 +39,11 @@ func ReadInConfig(cn string) error {
 func GetStr(key string) (string, error) {
 	v, err := get(key)
 	return v.(string), err
+}
+
+func GetInt(key string) (int, error) {
+	v, err := get(key)
+	return v.(int), err
 }
 
 func GetUInt(key string) (uint, error) {
