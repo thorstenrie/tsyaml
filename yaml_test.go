@@ -1,6 +1,7 @@
 package tsyaml
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
@@ -13,10 +14,10 @@ const (
 	testCty   string = "Heidelberg"
 )
 
-const (
+var (
 	tcYaml string = "testStr: " + testStr + "\n" +
-		"testUint: " + string(testUint) + "\n" +
-		"testInt: " + string(testInt) + "\n" +
+		"testUint: " + fmt.Sprintf("%v", testUint) + "\n" +
+		"testInt: " + fmt.Sprintf("%v", testInt) + "\n" +
 		"location:\n" +
 		"    country: " + testCntry + "\n" +
 		"    city: " + testCty + "\n"
