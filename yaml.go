@@ -53,7 +53,7 @@ func GetInt(key string) (int, error) {
 	return cast.ToIntE(v)
 }
 
-func GetUInt(key string) (uint, error) {
+func GetUint(key string) (uint, error) {
 	v, err := get(key)
 	if err != nil {
 		return 0, err

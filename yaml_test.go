@@ -67,28 +67,33 @@ func TestStr(t *testing.T) {
 	}
 }
 
-func TestInvalidKey(t *testing.T) { // TODO
+func TestInvalidKeyStr(t *testing.T) {
 	tmpYaml(t)
 	keyRev := revStr(keyStr)
-	if testStr, errg := GetStr(keyRev); errg != nil {
-		t.Errorf("Get string for key %v failed: %v", keyRev, errg)
-	} else if errc := check(testStr, wantStr); errc != nil {
-		t.Error(errc)
+	if _, errg := GetStr(keyRev); errg == nil {
+		t.Errorf("Expected error, but no error received for key %v", keyRev)
 	}
 }
 
-func TestInvalidValue(t *testing.T) { // TODO
+func TestInvalidKeyInt(t *testing.T) {
 	tmpYaml(t)
-	if testStr, errg := GetStr(keyStrAlt); errg != nil {
-		t.Errorf("Get string for key %v failed: %v", keyStrAlt, errg)
-	} else if errc := check(testStr, wantStr); errc != nil {
-		t.Error(errc)
+	keyRev := revStr(keyInt)
+	if _, errg := GetInt(keyRev); errg == nil {
+		t.Errorf("Expected error, but no error received for key %v", keyRev)
+	}
+}
+
+func TestInvalidKeyUint(t *testing.T) {
+	tmpYaml(t)
+	keyRev := revStr(keyUint)
+	if _, errg := GetUint(keyRev); errg == nil {
+		t.Errorf("Expected error, but no error received for key %v", keyRev)
 	}
 }
 
 func TestUint(t *testing.T) {
 	tmpYaml(t)
-	if testUint, errg := GetUInt(keyUint); errg != nil {
+	if testUint, errg := GetUint(keyUint); errg != nil {
 		t.Errorf("Get uint for key %v failed: %v", keyUint, errg)
 	} else if errc := check(testUint, wantUint); errc != nil {
 		t.Error(errc)
