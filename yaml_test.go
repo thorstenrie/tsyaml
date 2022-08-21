@@ -3,6 +3,7 @@ package tsyaml
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -44,6 +45,33 @@ func TestStr(t *testing.T) {
 		t.Error(errGet(keyStr, errg))
 	} else if errc := check(testStr, wantStr); errc != nil {
 		t.Error(errc)
+	}
+}
+
+func BenchmarkYaml(b *testing.B) {
+	tmpYamlInit(b)
+	f := []string{filepath.Base(tmpYamlCreate(b, tcYaml)), filepath.Base(tmpYamlCreate(b, tcYaml))}
+	// Reset benchmark timer
+	b.ResetTimer()
+	// Run benchmark with all testcases in each iteration
+	for i := 0; i < b.N; i++ {
+		fn := f[i&0x1]
+		if err := ReadInConfig(fn); err != nil {
+			b.Fatal(errRd(fn, err))
+		}
+		if _, errg := GetStr(keyStr); errg != nil {
+			b.Error(errGet(keyStr, errg))
+		}
+		if _, errg := GetUint(keyUint); errg != nil {
+			b.Error(errGet(keyUint, errg))
+		}
+		if _, errg := GetInt(keyInt); errg != nil {
+			b.Error(errGet(keyInt, errg))
+		}
+		keynested := keyN.root + "." + keyN.leaf
+		if _, errg := GetStr(keynested); errg != nil {
+			b.Error(errGet(keynested, errg))
+		}
 	}
 }
 
@@ -116,7 +144,7 @@ func revStr(s string) string {
 
 func TestInvalidYaml(t *testing.T) {
 	tmpYamlInit(t)
-	f := tmpYamlCreate(t)
+	f := tmpYamlCreate(t, tcYaml)
 	if err := os.Remove(f); err != nil {
 		t.Fatalf("removing %v failed: %v", f, err)
 	}

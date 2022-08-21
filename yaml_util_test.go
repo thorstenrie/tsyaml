@@ -34,9 +34,13 @@ func errExp(key string) error {
 	return fmt.Errorf("expected error, but no error received for key %v", key)
 }
 
+func errRd(f string, err error) error {
+	return fmt.Errorf("read in config of %v failed: %v", f, err)
+}
+
 func tmpYaml[T testingtype](tt T) {
 	tmpYamlInit(tt)
-	f := tmpYamlCreate(tt)
+	f := tmpYamlCreate(tt, tcYaml)
 	if err := tmpYamlRead(tt, f); err != nil {
 		tt.Fatalf("read in config of %v failed: %v", f, err)
 	}
@@ -47,14 +51,14 @@ func tmpYamlRead[T testingtype](tt T, f string) error {
 	return ReadInConfig(fn)
 }
 
-func tmpYamlCreate[T testingtype](tt T) string {
-	// Create temp log file tsyaml_test_* in the temp directory
+func tmpYamlCreate[T testingtype](tt T, tc string) string {
+	// Create temp file tsyaml_test_* in the temp directory
 	f, err := os.CreateTemp(os.TempDir(), "tsyaml_test_*.yaml")
 	if err != nil {
 		f.Close()
 		tt.Fatalf("creating %v failed: %v", f.Name(), err)
 	}
-	if _, err := f.WriteString(tcYaml); err != nil {
+	if _, err := f.WriteString(tc); err != nil {
 		f.Close()
 		tt.Fatalf("writing test yaml file %v failed: %v", f.Name(), err)
 	}

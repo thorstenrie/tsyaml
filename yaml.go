@@ -64,14 +64,14 @@ func GetUint(key string) (uint, error) {
 func get(key string) (interface{}, error) {
 	var err error = nil
 	if key == "" {
-		err = fmt.Errorf("attribute name cannot be empty")
+		err = fmt.Errorf("key name cannot be empty")
 		tslog.E.Println(err)
 		return nil, err
 	}
 	v := viper.Get(key)
 	if v == nil {
 		err = fmt.Errorf("did not find key %v", key)
-		tslog.I.Println(err)
+		tslog.E.Println(err)
 	}
 	return v, err
 }
