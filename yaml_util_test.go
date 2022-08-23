@@ -7,18 +7,20 @@ import (
 	"testing"
 )
 
-// A testingtype interface implements Errorf for T, B and F.
-// The interface enables generic functions for all test types T, B and F.
+// A testingtype interface implements Errorf and Fatalf for T, B and F.
+// The interface is used generic functions for testing types T, B and F.
 type testingtype interface {
 	*testing.T | *testing.B | *testing.F
 	Errorf(format string, a ...any)
 	Fatalf(format string, a ...any)
 }
 
+// An icheck interface is constrained to the value types associated with a key.
 type icheck interface {
 	string | uint | int
 }
 
+// check evaluates, if want and test are equal. If not, the function returns an error.
 func check[T icheck](want T, test T) error {
 	if test != want {
 		return fmt.Errorf("expected %v but received %v", want, test)
@@ -26,21 +28,31 @@ func check[T icheck](want T, test T) error {
 	return nil
 }
 
+// errGet has the purpose to return an error for cases when get for a key fails with err.
 func errGet(key string, err error) error {
 	return fmt.Errorf("get %T for key %v failed: %w", key, key, err)
 }
 
+// errExp has the purpose to return an error for cases when an error is expected
+// but not received.
 func errExp(key string) error {
 	return fmt.Errorf("expected error, but no error received for key %v", key)
 }
 
+// errRd has the purpose to return an error for cases when reading a yaml file fails.
 func errRd(f string, err error) error {
 	return fmt.Errorf("read in config of %v failed: %v", f, err)
 }
 
+// tmpYaml creates a temp yaml file in the temporary directory. The yaml file
+// contains the defined testcase tcYaml. The config path is set to the temporary
+// directory and the temp yaml file is read in.
 func tmpYaml[T testingtype](tt T) {
+	// Set config path to the temporary directory
 	tmpYamlInit(tt)
+	// Create a temporary yaml file containing the testcase tcYaml
 	f := tmpYamlCreate(tt, tcYaml)
+	// Read the temporary yaml file in or log an error followed by FailNow
 	if err := tmpYamlRead(tt, f); err != nil {
 		tt.Fatalf("read in config of %v failed: %v", f, err)
 	}
