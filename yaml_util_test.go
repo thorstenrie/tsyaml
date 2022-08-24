@@ -1,14 +1,15 @@
 package tsyaml
 
+// Import standard library packages
 import (
-	"fmt"
-	"os"
-	"path/filepath"
-	"testing"
+	"fmt"           // fmt
+	"os"            // os
+	"path/filepath" // path/filepath
+	"testing"       // testing
 )
 
 // A testingtype interface implements Errorf and Fatalf for T, B and F.
-// The interface is used generic functions for testing types T, B and F.
+// The interface is used for generic functions for testing types T, B and F.
 type testingtype interface {
 	*testing.T | *testing.B | *testing.F
 	Errorf(format string, a ...any)

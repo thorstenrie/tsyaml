@@ -1,24 +1,27 @@
 package tsyaml
 
+// Import standard library packages
 import (
-	"fmt"
-	"os"
-	"path/filepath"
-	"testing"
+	"fmt"           // fmt
+	"os"            // os
+	"path/filepath" // path/filepath
+	"testing"       // testing
 )
 
+// The testcase comprises keys for strings, uint and int.
 const (
-	keyStr    string = "testStr"
-	keyStrAlt string = "testStrAlt"
-	keyUint   string = "testUint"
-	keyInt    string = "testInt"
+	keyStr    string = "testStr"    // string
+	keyStrAlt string = "testStrAlt" // alternate string
+	keyUint   string = "testUint"   // uint
+	keyInt    string = "testInt"    // int
 )
 
+// The testcases contain values for strings, uint and int.
 const (
-	wantStr    string = "Hello World!"
-	wantStrAlt string = "Alternative"
-	wantUint   uint   = 12345
-	wantInt    int    = -67890
+	wantStr    string = "Hello World!" // string
+	wantStrAlt string = "Alternative"  // alternate string
+	wantUint   uint   = 12345          // uint
+	wantInt    int    = -67890         // int
 )
 
 type nested struct {
