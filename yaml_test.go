@@ -148,7 +148,7 @@ func TestInvalidYaml(t *testing.T) {
 	if err := os.Remove(f); err != nil {
 		t.Fatalf("removing %v failed: %v", f, err)
 	}
-	if err := tmpYamlRead(t, f); err == nil {
+	if err := ReadInConfig(filepath.Base(f)); err == nil {
 		t.Errorf("Expected error, but no error received for config file %v", f)
 	}
 }
