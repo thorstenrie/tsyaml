@@ -30,5 +30,18 @@ In the Go app, the package is imported with
 import "github.com/thorstenrie/tsyaml"
 ```
 
+Yaml files are read in by using [ReadInConfig](https://pkg.go.dev/github.com/thorstenrie/tsyaml#ReadInConfig):
+
+```
+tsyaml.ReadInConfig("example") // Read "example.yaml" in directory defined by TS_YAMLPATH
+```
+
+Values of associated keys are retrieved by using the get functions [GetStr](https://pkg.go.dev/github.com/thorstenrie/tsyaml#GetStr), [GetUint](https://pkg.go.dev/github.com/thorstenrie/tsyaml#GetUint), [GetInt](https://pkg.go.dev/github.com/thorstenrie/tsyaml#GetInt):
+
+```
+out1, err1 := tsyaml.GetStr("test")   // string
+out2, err2 := tsyaml.GetInt("test2")  // int
+out3, err3 := tsyaml.GetUint("test3") // uint
+```
 
 
