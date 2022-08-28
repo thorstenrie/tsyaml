@@ -166,7 +166,7 @@ func TestInvalidYaml(t *testing.T) {
 	}
 }
 
-// BenchmarkYaml performans a benchmark reading the testcase from a yaml file and
+// BenchmarkYaml performs a benchmark reading the testcase from a yaml file and
 // retrieving four values of type string, uint, int, nested
 func BenchmarkYaml(b *testing.B) {
 	// Set config path to the temporary directory
