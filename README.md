@@ -1,4 +1,8 @@
 # tsyaml
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/thorstenrie/tsyaml)](https://goreportcard.com/report/github.com/thorstenrie/tsyaml)
+[![PkgGoDev](https://pkg.go.dev/badge/mod/github.com/thorstenrie/tsyaml)](https://pkg.go.dev/mod/github.com/thorstenrie/tsyaml)
+
 [Go](https://go.dev/) package to read from YAML files with a simple API ([KISS principle](https://en.wikipedia.org/wiki/KISS_principle)).
 
 - **Configuration**: Configured with one environment variable, initialized at startup of your app
